@@ -1,0 +1,45 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Godot-generated import cache
+*.import
+
+# Android export
+/android/
+
+# Mono/C# build artifacts (if you ever add C# support)
+.mono/
+data_*/
+mono_crash.*.json
+
+# Export templates and builds
+/export/
+/build/
+/builds/
+*.apk
+*.aab
+*.pck
+*.zip
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and editor files
+.vscode/
+*.swp
+*.swo
+*~
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Godot editor crash logs
+*.log
+
+# OpenXR vendors - do NOT ignore the addon's .so/.dll/.aar files
+# since those ship with the plugin and are tracked by LFS.
+# Only ignore locally-generated build artifacts:
+addons/godotopenxrvendors/.godot/
+addons/godotopenxrvendors/build/
