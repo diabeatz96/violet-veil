@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/scenes/core/xr_start.gd" id="0"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/player/player_body.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_feet"]
+
+[node name="XRRig" type="XROrigin3D"]
+script = ExtResource("0")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="LeftController" type="XRController3D" parent="."]
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="LeftController" instance=ExtResource("2")]
+
+[node name="MovementDirect" parent="LeftController" instance=ExtResource("4")]
+
+[node name="RightController" type="XRController3D" parent="."]
+tracker = &"right_hand"
+
+[node name="RightHand" parent="RightController" instance=ExtResource("3")]
+
+[node name="MovementTurn" parent="RightController" instance=ExtResource("5")]
+
+[node name="PlayerBody" parent="." instance=ExtResource("1")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody"]
+shape = SubResource("CapsuleShape3D_player")
