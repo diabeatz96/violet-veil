@@ -399,14 +399,6 @@ binding_path = "/user/hand/left/input/grip_surface/pose"
 action = SubResource("OpenXRAction_sopde")
 binding_path = "/user/hand/right/input/grip_surface/pose"
 
-[sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_ot_09"]
-action = SubResource("OpenXRAction_3p2as")
-binding_path = "/user/hand/left/input/system/click"
-
-[sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_ot_10"]
-action = SubResource("OpenXRAction_3p2as")
-binding_path = "/user/hand/right/input/system/click"
-
 [sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_ot_11"]
 action = SubResource("OpenXRAction_iphn4")
 binding_path = "/user/hand/left/input/menu/click"
@@ -537,7 +529,7 @@ binding_path = "/user/hand/right/input/squeeze/value"
 
 [sub_resource type="OpenXRInteractionProfile" id="OpenXRInteractionProfile_ot_touch"]
 interaction_profile_path = "/interaction_profiles/oculus/touch_controller"
-bindings = [SubResource("OpenXRIPBinding_ot_01"), SubResource("OpenXRIPBinding_ot_02"), SubResource("OpenXRIPBinding_ot_03"), SubResource("OpenXRIPBinding_ot_04"), SubResource("OpenXRIPBinding_ot_05"), SubResource("OpenXRIPBinding_ot_06"), SubResource("OpenXRIPBinding_ot_07"), SubResource("OpenXRIPBinding_ot_08"), SubResource("OpenXRIPBinding_ot_09"), SubResource("OpenXRIPBinding_ot_10"), SubResource("OpenXRIPBinding_ot_11"), SubResource("OpenXRIPBinding_ot_12"), SubResource("OpenXRIPBinding_ot_13"), SubResource("OpenXRIPBinding_ot_14"), SubResource("OpenXRIPBinding_ot_15"), SubResource("OpenXRIPBinding_ot_16"), SubResource("OpenXRIPBinding_ot_17"), SubResource("OpenXRIPBinding_ot_18"), SubResource("OpenXRIPBinding_ot_19"), SubResource("OpenXRIPBinding_ot_20"), SubResource("OpenXRIPBinding_ot_21"), SubResource("OpenXRIPBinding_ot_22"), SubResource("OpenXRIPBinding_ot_23"), SubResource("OpenXRIPBinding_ot_24"), SubResource("OpenXRIPBinding_ot_25"), SubResource("OpenXRIPBinding_ot_26"), SubResource("OpenXRIPBinding_ot_27"), SubResource("OpenXRIPBinding_ot_28"), SubResource("OpenXRIPBinding_ot_29"), SubResource("OpenXRIPBinding_ot_30"), SubResource("OpenXRIPBinding_ot_31"), SubResource("OpenXRIPBinding_ot_32"), SubResource("OpenXRIPBinding_ot_33"), SubResource("OpenXRIPBinding_ot_34"), SubResource("OpenXRIPBinding_ot_35"), SubResource("OpenXRIPBinding_ot_36"), SubResource("OpenXRIPBinding_ot_37"), SubResource("OpenXRIPBinding_ot_vv_mt"), SubResource("OpenXRIPBinding_ot_vv_ab"), SubResource("OpenXRIPBinding_ot_vv_fi"), SubResource("OpenXRIPBinding_ot_vv_gl"), SubResource("OpenXRIPBinding_ot_vv_gr")]
+bindings = [SubResource("OpenXRIPBinding_ot_01"), SubResource("OpenXRIPBinding_ot_02"), SubResource("OpenXRIPBinding_ot_03"), SubResource("OpenXRIPBinding_ot_04"), SubResource("OpenXRIPBinding_ot_05"), SubResource("OpenXRIPBinding_ot_06"), SubResource("OpenXRIPBinding_ot_07"), SubResource("OpenXRIPBinding_ot_08"), SubResource("OpenXRIPBinding_ot_11"), SubResource("OpenXRIPBinding_ot_12"), SubResource("OpenXRIPBinding_ot_13"), SubResource("OpenXRIPBinding_ot_14"), SubResource("OpenXRIPBinding_ot_15"), SubResource("OpenXRIPBinding_ot_16"), SubResource("OpenXRIPBinding_ot_17"), SubResource("OpenXRIPBinding_ot_18"), SubResource("OpenXRIPBinding_ot_19"), SubResource("OpenXRIPBinding_ot_20"), SubResource("OpenXRIPBinding_ot_21"), SubResource("OpenXRIPBinding_ot_22"), SubResource("OpenXRIPBinding_ot_23"), SubResource("OpenXRIPBinding_ot_24"), SubResource("OpenXRIPBinding_ot_25"), SubResource("OpenXRIPBinding_ot_26"), SubResource("OpenXRIPBinding_ot_27"), SubResource("OpenXRIPBinding_ot_28"), SubResource("OpenXRIPBinding_ot_29"), SubResource("OpenXRIPBinding_ot_30"), SubResource("OpenXRIPBinding_ot_31"), SubResource("OpenXRIPBinding_ot_32"), SubResource("OpenXRIPBinding_ot_33"), SubResource("OpenXRIPBinding_ot_34"), SubResource("OpenXRIPBinding_ot_35"), SubResource("OpenXRIPBinding_ot_36"), SubResource("OpenXRIPBinding_ot_37"), SubResource("OpenXRIPBinding_ot_vv_mt"), SubResource("OpenXRIPBinding_ot_vv_ab"), SubResource("OpenXRIPBinding_ot_vv_fi"), SubResource("OpenXRIPBinding_ot_vv_gl"), SubResource("OpenXRIPBinding_ot_vv_gr")]
 
 [sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_lng5j"]
 action = SubResource("OpenXRAction_oi0ij")
@@ -1619,14 +1611,6 @@ binding_path = "/user/hand/left/input/grip_surface/pose"
 action = SubResource("OpenXRAction_sopde")
 binding_path = "/user/hand/right/input/grip_surface/pose"
 
-[sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_vf_08"]
-action = SubResource("OpenXRAction_3p2as")
-binding_path = "/user/hand/left/input/system/click"
-
-[sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_vf_09"]
-action = SubResource("OpenXRAction_3p2as")
-binding_path = "/user/hand/right/input/system/click"
-
 [sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_vf_10"]
 action = SubResource("OpenXRAction_iphn4")
 binding_path = "/user/hand/left/input/menu/click"
@@ -1741,7 +1725,7 @@ binding_path = "/user/hand/right/input/squeeze/click"
 
 [sub_resource type="OpenXRInteractionProfile" id="OpenXRInteractionProfile_vf"]
 interaction_profile_path = "/interaction_profiles/htc/vive_focus3_controller"
-bindings = [SubResource("OpenXRIPBinding_vf_00"), SubResource("OpenXRIPBinding_vf_01"), SubResource("OpenXRIPBinding_vf_02"), SubResource("OpenXRIPBinding_vf_03"), SubResource("OpenXRIPBinding_vf_04"), SubResource("OpenXRIPBinding_vf_05"), SubResource("OpenXRIPBinding_vf_06"), SubResource("OpenXRIPBinding_vf_07"), SubResource("OpenXRIPBinding_vf_08"), SubResource("OpenXRIPBinding_vf_09"), SubResource("OpenXRIPBinding_vf_10"), SubResource("OpenXRIPBinding_vf_11"), SubResource("OpenXRIPBinding_vf_12"), SubResource("OpenXRIPBinding_vf_13"), SubResource("OpenXRIPBinding_vf_14"), SubResource("OpenXRIPBinding_vf_15"), SubResource("OpenXRIPBinding_vf_16"), SubResource("OpenXRIPBinding_vf_17"), SubResource("OpenXRIPBinding_vf_18"), SubResource("OpenXRIPBinding_vf_19"), SubResource("OpenXRIPBinding_vf_20"), SubResource("OpenXRIPBinding_vf_21"), SubResource("OpenXRIPBinding_vf_22"), SubResource("OpenXRIPBinding_vf_23"), SubResource("OpenXRIPBinding_vf_24"), SubResource("OpenXRIPBinding_vf_25"), SubResource("OpenXRIPBinding_vf_26"), SubResource("OpenXRIPBinding_vf_27"), SubResource("OpenXRIPBinding_vf_28"), SubResource("OpenXRIPBinding_vf_29"), SubResource("OpenXRIPBinding_vf_30"), SubResource("OpenXRIPBinding_vf_31"), SubResource("OpenXRIPBinding_vf_32"), SubResource("OpenXRIPBinding_vf_33"), SubResource("OpenXRIPBinding_vf_34"), SubResource("OpenXRIPBinding_vf_35"), SubResource("OpenXRIPBinding_vf_36"), SubResource("OpenXRIPBinding_vf_37")]
+bindings = [SubResource("OpenXRIPBinding_vf_00"), SubResource("OpenXRIPBinding_vf_01"), SubResource("OpenXRIPBinding_vf_02"), SubResource("OpenXRIPBinding_vf_03"), SubResource("OpenXRIPBinding_vf_04"), SubResource("OpenXRIPBinding_vf_05"), SubResource("OpenXRIPBinding_vf_06"), SubResource("OpenXRIPBinding_vf_07"), SubResource("OpenXRIPBinding_vf_10"), SubResource("OpenXRIPBinding_vf_11"), SubResource("OpenXRIPBinding_vf_12"), SubResource("OpenXRIPBinding_vf_13"), SubResource("OpenXRIPBinding_vf_14"), SubResource("OpenXRIPBinding_vf_15"), SubResource("OpenXRIPBinding_vf_16"), SubResource("OpenXRIPBinding_vf_17"), SubResource("OpenXRIPBinding_vf_18"), SubResource("OpenXRIPBinding_vf_19"), SubResource("OpenXRIPBinding_vf_20"), SubResource("OpenXRIPBinding_vf_21"), SubResource("OpenXRIPBinding_vf_22"), SubResource("OpenXRIPBinding_vf_23"), SubResource("OpenXRIPBinding_vf_24"), SubResource("OpenXRIPBinding_vf_25"), SubResource("OpenXRIPBinding_vf_26"), SubResource("OpenXRIPBinding_vf_27"), SubResource("OpenXRIPBinding_vf_28"), SubResource("OpenXRIPBinding_vf_29"), SubResource("OpenXRIPBinding_vf_30"), SubResource("OpenXRIPBinding_vf_31"), SubResource("OpenXRIPBinding_vf_32"), SubResource("OpenXRIPBinding_vf_33"), SubResource("OpenXRIPBinding_vf_34"), SubResource("OpenXRIPBinding_vf_35"), SubResource("OpenXRIPBinding_vf_36"), SubResource("OpenXRIPBinding_vf_37")]
 
 [sub_resource type="OpenXRIPBinding" id="OpenXRIPBinding_vt_00"]
 action = SubResource("OpenXRAction_oi0ij")

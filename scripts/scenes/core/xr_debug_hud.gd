@@ -29,6 +29,7 @@ func _process(_delta: float) -> void:
 
 	var lines: PackedStringArray = PackedStringArray()
 	lines.append("=== VV Debug ===")
+	lines.append("FPS: %d" % Engine.get_frames_per_second())
 	lines.append("Mode: %s" % GameState.Mode.keys()[GameState.combat_mode])
 	lines.append("SlotA: %s" % GameState.ColorID.keys()[GameState.color_slot_a])
 	lines.append("SlotB: %s" % GameState.ColorID.keys()[GameState.color_slot_b])
