@@ -149,13 +149,11 @@ toplevel_paths = PackedStringArray("/user/hand/left")
 [sub_resource type="OpenXRAction" id="OpenXRAction_r3qn1"]
 resource_name = "absorb"
 localized_name = "Left hand absorbs a projectile in ABSORB_SHOOT mode"
-action_type = 0
 toplevel_paths = PackedStringArray("/user/hand/left")
 
 [sub_resource type="OpenXRAction" id="OpenXRAction_n01b8"]
 resource_name = "fire"
 localized_name = "Right hand fires a projectile in ABSORB_SHOOT mode"
-action_type = 0
 toplevel_paths = PackedStringArray("/user/hand/right")
 
 [sub_resource type="OpenXRAction" id="OpenXRAction_pjtev"]
