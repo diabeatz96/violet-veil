@@ -1,3 +1,4 @@
+class_name ReflectBarrier
 extends Area3D
 ## Reflects incoming projectiles back when active.
 ## Attach as a child of each XRController3D (via HandController).
@@ -16,13 +17,11 @@ func _ready() -> void:
 func activate() -> void:
 	_active = true
 	monitoring = true
-	visible = true
 
 
 func deactivate() -> void:
 	_active = false
 	monitoring = false
-	visible = false
 
 
 func _on_body_entered(body: Node3D) -> void:
@@ -30,7 +29,8 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 	if not body.is_in_group("projectile"):
 		return
-	if body.has_method("reflect"):
-		var color_id: int = body.color_id if "color_id" in body else GameState.ColorID.NONE
-		body.reflect(global_transform.basis.z.normalized())
-		projectile_reflected.emit(color_id)
+	if not body.has_method("reflect"):
+		return
+	var color_id: int = body.get("color_id") if body.get("color_id") != null else GameState.ColorID.NONE
+	body.call("reflect", global_transform.basis.z.normalized())
+	projectile_reflected.emit(color_id)

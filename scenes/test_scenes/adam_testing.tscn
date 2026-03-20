@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dq3skfxpkd57s"]
 
 [ext_resource type="PackedScene" path="res://scenes/core/XRRig.tscn" id="1_du7mj"]
+[ext_resource type="Script" uid="uid://tdaxwj3d3vk5" path="res://scripts/scenes/test_scenes/test_turret.gd" id="2_fnccd"]
+[ext_resource type="PackedScene" path="res://scenes/core/Projectile.tscn" id="3_0ipxd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_du7mj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -21,6 +23,8 @@ size = Vector3(10, 0.1, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
 size = Vector3(10, 0.1, 10)
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_h6wrc"]
+
 [node name="AdamTesting" type="Node3D" unique_id=800253571]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1871043304]
@@ -39,3 +43,14 @@ mesh = SubResource("BoxMesh_8afph")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" unique_id=1371003511]
 shape = SubResource("BoxShape3D_floor")
+
+[node name="TurretShot" type="Node3D" parent="." unique_id=1075199301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.148186, 1.5615647, 0)
+script = ExtResource("2_fnccd")
+projectile_scene = ExtResource("3_0ipxd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TurretShot" unique_id=1542700666]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9442587, 0, 0)
+mesh = SubResource("CapsuleMesh_h6wrc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TurretShot" unique_id=1908678964]
