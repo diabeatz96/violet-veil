@@ -1,60 +1,49 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene format=3 uid="uid://dnlq17bvcdpdq"]
 
-[ext_resource type="Script" path="res://scripts/scenes/core/xr_start.gd" id="1_start"]
-[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/player/player_body.tscn" id="2_body"]
-[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="3_lhand"]
-[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="4_rhand"]
-[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="5_move"]
-[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_turn"]
-[ext_resource type="Script" path="res://scripts/scenes/core/hand_controller.gd" id="7_hctrl"]
-[ext_resource type="Script" path="res://scripts/scenes/core/reflect_barrier.gd" id="8_barrier"]
-[ext_resource type="Script" path="res://scripts/scenes/core/xr_debug_hud.gd" id="9_debug"]
+[ext_resource type="Script" path="res://scripts/scenes/core/xr_start.gd" id="0"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/player/player_body.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="5"]
+[ext_resource type="Script" path="res://scripts/scenes/core/hand_controller.gd" id="6"]
+[ext_resource type="Script" path="res://scripts/scenes/core/reflect_barrier.gd" id="7"]
+[ext_resource type="Script" path="res://scripts/scenes/core/xr_debug_hud.gd" id="8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.3
 height = 1.8
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_barrier"]
 size = Vector3(0.25, 0.25, 0.05)
 
-
 [node name="XRRig" type="XROrigin3D"]
-script = ExtResource("1_start")
+script = ExtResource("0")
 
-[node name="XRCamera3D" type="XRCamera3D" parent="."]
+[node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=1785819095]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
-[node name="LeftController" type="XRController3D" parent="."]
+[node name="LeftController" type="XRController3D" parent="." unique_id=666832609]
 tracker = &"left_hand"
 script = ExtResource("7_hctrl")
 side = 0
 
-[node name="LeftHand" parent="LeftController" instance=ExtResource("3_lhand")]
+[node name="LeftHand" parent="LeftController" instance=ExtResource("2")]
 
-[node name="MovementDirect" parent="LeftController" instance=ExtResource("5_move")]
+[node name="MovementDirect" parent="LeftController" instance=ExtResource("4")]
 
 [node name="ReflectBarrier" type="Area3D" parent="LeftController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("8_barrier")
+script = ExtResource("7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftController/ReflectBarrier"]
-shape = SubResource("BoxShape3D_1")
-
-
-[node name="AbsorbArea" type="Area3D" parent="LeftController"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
-collision_layer = 0
-collision_mask = 2
-monitoring = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftController/AbsorbArea"]
-shape = SubResource("BoxShape3D_1")
+shape = SubResource("BoxShape3D_barrier")
 
 [node name="DebugHUD" type="Node3D" parent="LeftController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
-script = ExtResource("9_debug")
+script = ExtResource("8")
 
 [node name="Label3D" type="Label3D" parent="LeftController/DebugHUD"]
 pixel_size = 0.001
@@ -64,26 +53,25 @@ horizontal_alignment = 0
 vertical_alignment = 0
 no_depth_test = true
 
-[node name="RightController" type="XRController3D" parent="."]
+[node name="RightController" type="XRController3D" parent="." unique_id=388544050]
 tracker = &"right_hand"
 script = ExtResource("7_hctrl")
 side = 1
 
-[node name="RightHand" parent="RightController" instance=ExtResource("4_rhand")]
+[node name="RightHand" parent="RightController" instance=ExtResource("3")]
 
-[node name="MovementTurn" parent="RightController" instance=ExtResource("6_turn")]
+[node name="MovementTurn" parent="RightController" instance=ExtResource("5")]
 
 [node name="ReflectBarrier" type="Area3D" parent="RightController"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("8_barrier")
+script = ExtResource("7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RightController/ReflectBarrier"]
-shape = SubResource("BoxShape3D_1")
+shape = SubResource("BoxShape3D_barrier")
 
-
-[node name="PlayerBody" parent="." instance=ExtResource("2_body")]
+[node name="PlayerBody" parent="." instance=ExtResource("1")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerBody"]
-shape = SubResource("CapsuleShape3D_1")
+shape = SubResource("CapsuleShape3D_player")

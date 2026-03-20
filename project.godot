@@ -99,5 +99,6 @@ rendering_device/driver.windows="d3d12"
 [xr]
 
 openxr/enabled=true
+openxr/default_action_map="uid://yxmq6pk28a6o"
 openxr/reference_space=2
 shaders/enabled=true
