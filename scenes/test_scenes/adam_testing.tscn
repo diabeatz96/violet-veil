@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dq3skfxpkd57s"]
 
-[ext_resource type="PackedScene" path="res://scenes/core/XRRig.tscn" id="1_du7mj"]
+[ext_resource type="PackedScene" uid="uid://dnlq17bvcdpdq" path="res://scenes/core/XRRig.tscn" id="1_du7mj"]
+[ext_resource type="Script" uid="uid://tdaxwj3d3vk5" path="res://scripts/scenes/test_scenes/test_turret.gd" id="2_fnccd"]
+[ext_resource type="PackedScene" path="res://scenes/core/Projectile.tscn" id="3_0ipxd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_du7mj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

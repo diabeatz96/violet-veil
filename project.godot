@@ -69,7 +69,7 @@ Shortcuts/Halve_Snap_Step=Object(Shortcut,"resource_local_to_scene":false,"resou
 [application]
 
 config/name="Violet Veil"
-run/main_scene="uid://cxeloan6r1k06"
+run/main_scene="res://scenes/test_scenes/adam_testing.tscn"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
