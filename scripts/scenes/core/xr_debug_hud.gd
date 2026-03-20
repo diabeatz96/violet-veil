@@ -1,6 +1,6 @@
 extends Node3D
 ## Wrist-mounted debug HUD. Attach as a child of LeftController.
-## Always visible for now.
+## Toggle visibility with Y button (left hand).
 
 @onready var label: Label3D = $Label3D
 
@@ -24,7 +24,7 @@ func _on_button_pressed(action: String) -> void:
 
 
 func _process(_delta: float) -> void:
-	if not label:
+	if not visible or not label:
 		return
 
 	var lines: PackedStringArray = PackedStringArray()
@@ -37,17 +37,17 @@ func _process(_delta: float) -> void:
 	lines.append("")
 
 	if _left:
-		lines.append("L active: %s" % str(_left.get_is_active()))
-		lines.append("L trigger: %.2f" % _left.get_float("trigger"))
-		lines.append("L grip: %.2f" % _left.get_float("grip"))
-		lines.append("L ax(X): %s" % str(_left.is_button_pressed("ax_button")))
-		lines.append("L by(Y): %s" % str(_left.is_button_pressed("by_button")))
+		var mt := _left.is_button_pressed("mode_toggle")
+		var ab := _left.get_float("absorb")
+		var gl := _left.get_float("grip_left")
+		lines.append("L toggle: %s" % str(mt))
+		lines.append("L absorb: %.2f" % ab)
+		lines.append("L grip:   %.2f" % gl)
 
 	if _right:
-		lines.append("R active: %s" % str(_right.get_is_active()))
-		lines.append("R trigger: %.2f" % _right.get_float("trigger"))
-		lines.append("R grip: %.2f" % _right.get_float("grip"))
-		lines.append("R ax(A): %s" % str(_right.is_button_pressed("ax_button")))
-		lines.append("R by(B): %s" % str(_right.is_button_pressed("by_button")))
+		var fi := _right.get_float("fire")
+		var gr := _right.get_float("grip_right")
+		lines.append("R fire:   %.2f" % fi)
+		lines.append("R grip:   %.2f" % gr)
 
 	label.text = "\n".join(lines)
