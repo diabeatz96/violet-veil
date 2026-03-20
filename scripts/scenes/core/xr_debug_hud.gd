@@ -6,23 +6,21 @@ extends Node3D
 
 var _left: XRController3D
 var _right: XRController3D
+var _hud_visible: bool = false
 
 func _ready() -> void:
 	var origin := get_parent().get_parent()
 	_left = origin.get_node_or_null("LeftController")
 	_right = origin.get_node_or_null("RightController")
-	visible = true
-
+	visible = false
 	if _left:
-		_left.button_pressed.connect(_on_any_button.bind("L_pressed"))
-		_left.button_released.connect(_on_any_button.bind("L_released"))
-	if _right:
-		_right.button_pressed.connect(_on_any_button.bind("R_pressed"))
-		_right.button_released.connect(_on_any_button.bind("R_released"))
+		_left.button_pressed.connect(_on_button_pressed)
 
 
-func _on_any_button(action: String, source: String) -> void:
-	print("[DebugHUD] %s: %s" % [source, action])
+func _on_button_pressed(action: String) -> void:
+	if action == "by_button":
+		_hud_visible = not _hud_visible
+		visible = _hud_visible
 
 
 func _process(_delta: float) -> void:
