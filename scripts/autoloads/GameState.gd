@@ -9,9 +9,9 @@ enum Side { LEFT, RIGHT }
 
 # ── Signals ──
 
-signal slot_a_changed(color_id: ColorID)
-signal slot_b_changed(color_id: ColorID)
-signal mode_changed(mode: Mode)
+signal slot_a_changed(color_id: int)
+signal slot_b_changed(color_id: int)
+signal mode_changed(mode: int)
 signal player_hit(current_hp: int)
 signal sublevel_cleared(tier: int, sublevel: int)
 
@@ -22,17 +22,17 @@ var current_sublevel: int = 1
 var player_hp: int = 100
 var hit_count: int = 0
 
-var color_slot_a: ColorID = ColorID.NONE:
+var color_slot_a: int = ColorID.NONE:
 	set(value):
 		color_slot_a = value
 		slot_a_changed.emit(value)
 
-var color_slot_b: ColorID = ColorID.NONE:
+var color_slot_b: int = ColorID.NONE:
 	set(value):
 		color_slot_b = value
 		slot_b_changed.emit(value)
 
-var combat_mode: Mode = Mode.REFLECT:
+var combat_mode: int = Mode.REFLECT:
 	set(value):
 		combat_mode = value
 		mode_changed.emit(value)
@@ -45,7 +45,7 @@ func register_hit() -> void:
 	player_hit.emit(player_hp)
 
 
-func set_color_slot(side: Side, id: ColorID) -> void:
+func set_color_slot(side: int, id: int) -> void:
 	if side == Side.LEFT:
 		color_slot_a = id
 	else:
