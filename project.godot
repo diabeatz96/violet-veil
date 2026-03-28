@@ -78,6 +78,7 @@ config/icon="res://icon.svg"
 XRToolsUserSettings="*uid://bqgb8i74tm0t"
 XRToolsRumbleManager="*uid://by853dk86g1qw"
 GameState="*res://scripts/autoloads/GameState.gd"
+AudioManager="*uid://c6hxrv1wb8j4p"
 
 [dotnet]
 
@@ -85,7 +86,7 @@ project/assembly_name="Violet Veil"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/assetplacer/plugin.cfg", "res://addons/godot-xr-tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg", "res://addons/godot-xr-tools/plugin.cfg")
 
 [physics]
 
