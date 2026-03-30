@@ -1,12 +1,10 @@
 extends Node3D
 ## Fires projectiles at the player at a configurable rate.
 ## Place in a test scene to test the reflect mechanic.
+## Assign a FirePattern resource to control how this turret shoots.
 
 ## Seconds between shots.
 @export var fire_rate: float = 2.0
-
-## Random spread in degrees for inaccuracy.
-@export var spread_degrees: float = 3.0
 
 ## Colors this turret picks from randomly.
 @export var color_pool: Array[int] = [
@@ -17,8 +15,16 @@ extends Node3D
 ## The projectile scene to instance.
 @export var projectile_scene: PackedScene
 
+## Fire pattern — controls spread, burst, ring, etc.
+## Leave empty for a basic single shot.
+@export var fire_pattern: FirePattern
+
+## Projectile speed.
+@export var projectile_speed: float = 5.0
+
 var _timer: Timer
 var _camera: XRCamera3D
+
 
 func _ready() -> void:
 	# Find the player camera to aim at
@@ -37,24 +43,56 @@ func _fire() -> void:
 	if not projectile_scene or not _camera:
 		return
 
-	var projectile: RigidBody3D = projectile_scene.instantiate()
-
-	# Pick a random color
+	# Pick a random color for this volley
+	var color: int = GameState.ColorID.NONE
 	if color_pool.size() > 0:
-		projectile.set("color_id", color_pool[randi() % color_pool.size()])
+		color = color_pool[randi() % color_pool.size()]
 
-	# Calculate direction toward player head with optional spread
-	var target_pos := _camera.global_position
-	var direction := (target_pos - global_position).normalized()
+	# Aim at the player's head
+	var direction := (_camera.global_position - global_position).normalized()
 
-	# Apply spread
-	if spread_degrees > 0.0:
-		var spread_rad := deg_to_rad(spread_degrees)
-		direction = direction.rotated(Vector3.UP, randf_range(-spread_rad, spread_rad))
-		direction = direction.rotated(Vector3.RIGHT, randf_range(-spread_rad, spread_rad))
+	# No pattern — fire a single shot
+	if not fire_pattern:
+		_spawn_projectile(direction, color)
+		return
 
-	projectile.call("set_direction", direction)
+	# Wind-up delay — gives the player time to react
+	if fire_pattern.windup_time > 0.0:
+		await get_tree().create_timer(fire_pattern.windup_time).timeout
+		if not is_inside_tree() or not _camera:
+			return
+		# Re-aim after windup so direction is fresh
+		direction = (_camera.global_position - global_position).normalized()
 
-	# Add to tree FIRST, then set position (fixes global_transform error)
+	# Burst fires over time
+	if fire_pattern.is_burst():
+		_fire_burst(direction, color)
+		return
+
+	# All other patterns fire instantly
+	var directions: Array[Vector3] = fire_pattern.get_directions(direction)
+	for dir in directions:
+		_spawn_projectile(dir, color)
+
+
+func _spawn_projectile(dir: Vector3, color: int) -> void:
+	var projectile: RigidBody3D = projectile_scene.instantiate()
+	var final_speed := projectile_speed
+	if fire_pattern:
+		final_speed *= fire_pattern.speed_multiplier
+		fire_pattern.apply_to_projectile(projectile, _camera)
+	projectile.set("color_id", color)
+	projectile.call("set_direction", dir)
+	projectile.set("speed", final_speed)
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = global_position
+
+
+func _fire_burst(direction: Vector3, color: int) -> void:
+	for i in fire_pattern.projectile_count:
+		if not is_inside_tree():
+			return
+		var dirs: Array[Vector3] = fire_pattern.get_directions(direction)
+		_spawn_projectile(dirs[0], color)
+		if i < fire_pattern.projectile_count - 1:
+			await get_tree().create_timer(fire_pattern.burst_delay).timeout

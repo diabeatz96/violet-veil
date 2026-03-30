@@ -43,3 +43,6 @@ desktop.ini
 # Only ignore locally-generated build artifacts:
 addons/godotopenxrvendors/.godot/
 addons/godotopenxrvendors/build/
+
+# Claude Code local config
+.claude/
