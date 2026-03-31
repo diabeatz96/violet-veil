@@ -1,19 +1,7 @@
-[gd_resource type="Resource" script_class="FirePattern" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="FirePattern" format=3 uid="uid://cysrv3vqa2qtc"]
 
-[ext_resource type="Script" path="res://scripts/scenes/core/fire_pattern.gd" id="1"]
+[ext_resource type="Script" uid="uid://uq2j66qqo04n" path="res://scripts/scenes/core/fire_pattern.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
-shape = 0
-projectile_count = 1
 spread_angle_degrees = 0.0
-burst_delay = 0.1
-accuracy_jitter_degrees = 0.0
-speed_multiplier = 1.0
-damage_multiplier = 1.0
-projectile_scale = 1.0
-lifetime_override = 0.0
-acceleration = 0.0
-homing_strength = 0.0
-homing_delay = 0.0
-windup_time = 0.0
