@@ -16,8 +16,8 @@ extends Node3D
 @export var projectile_scene: PackedScene
 
 ## Fire pattern — controls spread, burst, ring, etc.
-## Leave empty for a basic single shot.
-@export var fire_pattern: FirePattern
+## Leave empty for a basic single shot. Assign a FirePattern .tres resource.
+@export var fire_pattern: Resource
 
 ## Projectile speed.
 @export var projectile_speed: float = 5.0

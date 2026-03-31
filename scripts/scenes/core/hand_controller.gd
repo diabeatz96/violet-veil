@@ -9,8 +9,8 @@ extends XRController3D
 @export var fire_speed: float = 8.0
 
 ## Fire pattern resource — controls spread, burst, ring, etc.
-## Leave empty for a basic single shot.
-@export var fire_pattern: FirePattern
+## Leave empty for a basic single shot. Assign a FirePattern .tres resource.
+@export var fire_pattern: Resource
 
 ## Which hand: 0 = LEFT, 1 = RIGHT
 @export_enum("LEFT", "RIGHT") var side: int = 0
