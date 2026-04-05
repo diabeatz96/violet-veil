@@ -8,7 +8,6 @@ enum EffectType { DAMAGE, SLOW, AREA_DENIAL, BURST_DAMAGE, MAJOR_DAMAGE } # Even
 enum Side { LEFT, RIGHT }
 
 # ── Signals ──
-
 signal slot_a_changed(color_id: int)
 signal slot_b_changed(color_id: int)
 signal mode_changed(mode: int)
