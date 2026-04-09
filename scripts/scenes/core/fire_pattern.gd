@@ -81,7 +81,7 @@ func apply_to_projectile(projectile: Node3D, homing_target: Node3D = null) -> vo
 
 ## Returns a list of direction vectors for this pattern.
 ## [param forward] is the base aim direction (normalized).
-## For BURST, this returns one direction per call — use fire_burst() instead.
+## For BURST, this returns one direction per call — the caller handles the loop and delay.
 func get_directions(forward: Vector3) -> Array[Vector3]:
 	forward = forward.normalized()
 	var directions: Array[Vector3] = []

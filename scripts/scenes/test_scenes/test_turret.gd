@@ -16,14 +16,15 @@ extends Node3D
 @export var projectile_scene: PackedScene
 
 ## Fire pattern — controls spread, burst, ring, etc.
-## Leave empty for a basic single shot. Assign a FirePattern .tres resource.
-@export var fire_pattern: Resource
+## Leave empty for a basic single shot.
+@export var fire_pattern: FirePattern
 
 ## Projectile speed.
 @export var projectile_speed: float = 5.0
 
 var _timer: Timer
 var _camera: XRCamera3D
+var _is_firing: bool = false
 
 
 func _ready() -> void:
@@ -40,8 +41,10 @@ func _ready() -> void:
 
 
 func _fire() -> void:
-	if not projectile_scene or not _camera:
+	if not projectile_scene or not _camera or _is_firing:
 		return
+
+	_is_firing = true
 
 	# Pick a random color for this volley
 	var color: int = GameState.ColorID.NONE
@@ -54,25 +57,30 @@ func _fire() -> void:
 	# No pattern — fire a single shot
 	if not fire_pattern:
 		_spawn_projectile(direction, color)
+		_is_firing = false
 		return
 
 	# Wind-up delay — gives the player time to react
 	if fire_pattern.windup_time > 0.0:
 		await get_tree().create_timer(fire_pattern.windup_time).timeout
 		if not is_inside_tree() or not _camera:
+			_is_firing = false
 			return
 		# Re-aim after windup so direction is fresh
 		direction = (_camera.global_position - global_position).normalized()
 
 	# Burst fires over time
 	if fire_pattern.is_burst():
-		_fire_burst(direction, color)
+		await _fire_burst(direction, color)
+		_is_firing = false
 		return
 
 	# All other patterns fire instantly
 	var directions: Array[Vector3] = fire_pattern.get_directions(direction)
 	for dir in directions:
 		_spawn_projectile(dir, color)
+
+	_is_firing = false
 
 
 func _spawn_projectile(dir: Vector3, color: int) -> void:

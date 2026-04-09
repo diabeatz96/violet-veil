@@ -71,7 +71,8 @@ func _physics_process(delta: float) -> void:
 		_homing_timer += delta
 		if _homing_timer >= homing_delay:
 			var to_target := (homing_target.global_position - global_position).normalized()
-			_direction = _direction.lerp(to_target, homing_strength * delta).normalized()
+			var homing_weight := clampf(homing_strength * delta, 0.0, 1.0)
+			_direction = _direction.lerp(to_target, homing_weight).normalized()
 
 	# Apply updated velocity
 	linear_velocity = _direction * _current_speed

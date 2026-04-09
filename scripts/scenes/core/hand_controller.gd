@@ -9,8 +9,8 @@ extends XRController3D
 @export var fire_speed: float = 8.0
 
 ## Fire pattern resource — controls spread, burst, ring, etc.
-## Leave empty for a basic single shot. Assign a FirePattern .tres resource.
-@export var fire_pattern: Resource
+## Leave empty for a basic single shot.
+@export var fire_pattern: FirePattern
 
 ## Which hand: 0 = LEFT, 1 = RIGHT
 @export_enum("LEFT", "RIGHT") var side: int = 0
@@ -20,6 +20,9 @@ var _barrier: ReflectBarrier = null
 
 ## Absorb area for left hand in ABSORB_SHOOT mode.
 var _absorb_area: Area3D = null
+
+## Prevents overlapping burst coroutines.
+var _is_firing: bool = false
 
 func _ready() -> void:
 	_barrier = get_node_or_null("ReflectBarrier")
@@ -84,13 +87,14 @@ func _on_absorb_body_entered(body: Node3D) -> void:
 
 
 func _fire_projectile() -> void:
-	if not projectile_scene:
+	if not projectile_scene or _is_firing:
 		return
 	# Fire whatever color is in slot A (absorbed color)
 	var color: int = GameState.color_slot_a
 	if color == GameState.ColorID.NONE:
 		return
 
+	_is_firing = true
 	var forward := -global_transform.basis.z
 	var spawn_pos := global_position + (forward * 0.15)
 
@@ -98,7 +102,7 @@ func _fire_projectile() -> void:
 	if not fire_pattern:
 		_spawn_projectile(forward, spawn_pos, color)
 	elif fire_pattern.is_burst():
-		_fire_burst(forward, spawn_pos, color)
+		await _fire_burst(forward, spawn_pos, color)
 	else:
 		var directions: Array[Vector3] = fire_pattern.get_directions(forward)
 		for dir in directions:
@@ -106,6 +110,7 @@ func _fire_projectile() -> void:
 
 	# Clear the slot after firing
 	GameState.set_color_slot(GameState.Side.LEFT, GameState.ColorID.NONE)
+	_is_firing = false
 
 
 ## Spawns a single projectile with the given direction, position, and color.
