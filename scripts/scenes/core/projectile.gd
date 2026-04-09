@@ -1,7 +1,15 @@
 class_name Projectile
 extends RigidBody3D
-## A color-tagged projectile that moves in a straight line.
-## Add to the "projectile" group. Detectable by ReflectBarrier.
+## A color-tagged projectile fired by turrets or the player.
+## Automatically added to the [code]"projectile"[/code] group on ready.
+##
+## [b]Setup:[/b] Set [member color_id] and call [method set_direction] before
+## adding to the scene tree. Speed, lifetime, and other properties can be
+## set directly or applied in bulk via [method FirePattern.apply_to_projectile].
+##
+## [b]Homing:[/b] Set [member homing_target] and [member homing_strength] to
+## make the projectile curve toward a target. Reflected projectiles have
+## homing disabled automatically so they fly straight back.
 
 ## The color this projectile carries.
 @export_enum("NONE", "WHITE", "BLUE", "RED", "AMBER", "VIOLET", "PALE_BLUE", "TEAL", "DEEP_ORANGE") var color_id: int = GameState.ColorID.NONE
@@ -12,19 +20,23 @@ extends RigidBody3D
 ## Seconds before auto-despawn.
 @export var lifetime: float = 5.0
 
-## Damage multiplier (set by FirePattern).
+## Damage multiplier applied by [FirePattern]. Default [code]1.0[/code].
 var damage_multiplier: float = 1.0
 
-## Acceleration in m/s² — positive speeds up, negative slows down.
+## Acceleration in m/s². Positive speeds up, negative slows down, 0 = constant.
+## Applied every physics frame in [method _physics_process].
 var acceleration: float = 0.0
 
-## How strongly this projectile curves toward its homing target.
+## How strongly this projectile curves toward [member homing_target].
+## [code]0.0[/code] = no homing. Higher = tighter tracking.
 var homing_strength: float = 0.0
 
-## Seconds before homing activates.
+## Seconds after spawn before homing kicks in. Gives the player time to
+## read the trajectory before it starts tracking.
 var homing_delay: float = 0.0
 
-## The node this projectile homes toward (usually the player camera).
+## The node this projectile homes toward. Usually the XR camera.
+## Set by [method FirePattern.apply_to_projectile] on turret-fired projectiles.
 var homing_target: Node3D = null
 
 var _direction: Vector3 = Vector3.FORWARD
@@ -78,7 +90,9 @@ func _physics_process(delta: float) -> void:
 	linear_velocity = _direction * _current_speed
 
 
-## Called by ReflectBarrier to reverse direction back toward where it came from.
+## Reverse this projectile's direction. Called by [ReflectBarrier] when the
+## projectile enters the barrier area. Disables homing so the reflected
+## projectile flies straight back at the shooter. Can only be called once.
 func reflect(barrier_normal: Vector3) -> void:
 	if _reflected:
 		return
@@ -91,7 +105,8 @@ func reflect(barrier_normal: Vector3) -> void:
 	homing_target = null
 
 
-## Set direction before adding to scene tree.
+## Set the projectile's travel direction. Call this [b]before[/b] adding to
+## the scene tree — [method _ready] uses this to set initial velocity.
 func set_direction(dir: Vector3) -> void:
 	_direction = dir.normalized()
 

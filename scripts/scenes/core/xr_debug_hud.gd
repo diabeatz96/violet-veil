@@ -34,6 +34,24 @@ func _process(_delta: float) -> void:
 	lines.append("SlotA: %s" % GameState.ColorID.keys()[GameState.color_slot_a])
 	lines.append("SlotB: %s" % GameState.ColorID.keys()[GameState.color_slot_b])
 	lines.append("HP: %d  Hits: %d" % [GameState.player_hp, GameState.hit_count])
+	lines.append("Tier: %d  Sub: %d  Loc: %d" % [GameState.current_tier, GameState.current_sublevel, GameState.current_location])
+
+	var dev_mode := get_node_or_null("/root/DevMode")
+	if dev_mode and dev_mode.enabled:
+		lines.append("")
+		lines.append("=== DEV MODE ===")
+		lines.append("God: %s" % ("ON" if dev_mode.god_mode else "OFF"))
+		var spawn_count: int = dev_mode.get_spawn_count()
+		if spawn_count > 0:
+			lines.append("Spawn: %d/%d" % [dev_mode.get_spawn_index() + 1, spawn_count])
+		else:
+			lines.append("Spawn: none")
+		lines.append("")
+		lines.append("R-stick: next spawn")
+		lines.append("L-stick: prev spawn")
+		lines.append("A: god mode")
+		lines.append("B: skip location")
+		lines.append("L-grip+trig: test proj")
 	lines.append("")
 
 	if _left:

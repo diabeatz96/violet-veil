@@ -1,7 +1,18 @@
 class_name FirePattern
 extends Resource
-## Defines how projectiles are fired: count, spread, timing, etc.
-## Create .tres files from this resource and assign them to turrets or the player.
+## Defines how projectiles are fired: count, spread, timing, and behavior.
+## Create [code].tres[/code] files from this resource in the inspector
+## and assign them to turrets or the player's hand controller.
+##
+## [b]Presets[/b] are in [code]res://resources/fire_patterns/[/code]:[br]
+## - [code]single.tres[/code] — one straight shot[br]
+## - [code]spread.tres[/code] — 5-projectile fan (shotgun)[br]
+## - [code]burst.tres[/code] — 3 rapid shots[br]
+## - [code]ring.tres[/code] — 8 projectiles in a circle[br]
+## - [code]homing.tres[/code] — slow, large, curves toward the player[br]
+##
+## [b]To create a new pattern:[/b] Right-click in FileSystem → New Resource →
+## FirePattern. Tweak values in the inspector.
 
 ## The shape of the fire pattern.
 enum Shape {
