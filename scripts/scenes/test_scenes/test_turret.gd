@@ -1,7 +1,13 @@
 extends Node3D
-## Fires projectiles at the player at a configurable rate.
-## Place in a test scene to test the reflect mechanic.
-## Assign a FirePattern resource to control how this turret shoots.
+## Enemy turret that fires projectiles at the player's head on a timer.
+## Place in any scene and configure via the inspector.
+##
+## [b]Usage:[/b] Assign a [member projectile_scene] and optionally a
+## [member fire_pattern] to control spread, burst, homing, etc.
+## The turret auto-aims at the XR camera each volley.
+##
+## [b]Color pool:[/b] Each shot picks a random color from [member color_pool].
+## This determines the projectile tint and what color the player absorbs.
 
 ## Seconds between shots.
 @export var fire_rate: float = 2.0

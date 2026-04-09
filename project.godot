@@ -78,6 +78,8 @@ config/icon="res://icon.svg"
 XRToolsUserSettings="*uid://bqgb8i74tm0t"
 XRToolsRumbleManager="*uid://by853dk86g1qw"
 GameState="*res://scripts/autoloads/GameState.gd"
+LevelManager="*res://scripts/autoloads/LevelManager.gd"
+DevMode="*res://scripts/autoloads/DevMode.gd"
 
 [dotnet]
 

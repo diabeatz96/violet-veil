@@ -1,6 +1,14 @@
 extends XRController3D
-## Drives combat behavior for each hand based on GameState.combat_mode.
-## Attach to both LeftController and RightController.
+## Drives combat behavior for each hand based on [member GameState.combat_mode].
+## Attach to both LeftController and RightController in the XR rig.
+##
+## [b]Left hand:[/b] X button toggles mode. In ABSORB_SHOOT mode, the
+## AbsorbArea catches incoming projectiles and stores their color.[br]
+## [b]Right hand:[/b] Trigger fires a projectile using the absorbed color
+## and the assigned [member fire_pattern].[br]
+##
+## Assign a [FirePattern] resource to [member fire_pattern] to control
+## spread, burst, homing, etc. Leave empty for a single straight shot.
 
 ## The projectile scene to fire in ABSORB_SHOOT mode (right hand).
 @export var projectile_scene: PackedScene

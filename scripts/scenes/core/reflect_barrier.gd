@@ -1,8 +1,16 @@
 class_name ReflectBarrier
 extends Area3D
-## Reflects incoming projectiles back when active.
+## Reflects incoming projectiles back toward the shooter.
 ## Attach as a child of each XRController3D (via HandController).
+##
+## Active in [code]REFLECT[/code] mode. When a body in the
+## [code]"projectile"[/code] group enters, it calls [method Projectile.reflect]
+## to reverse direction and emits [signal projectile_reflected].
+##
+## [b]Collision setup:[/b] collision_layer = 0, collision_mask = layer 2
+## (projectiles should be on layer 2).
 
+## Emitted when a projectile is reflected. Passes the projectile's [member Projectile.color_id].
 signal projectile_reflected(color_id: int)
 
 ## Whether the barrier is currently active.
@@ -14,11 +22,13 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
 
+## Enable the barrier. Called by HandController when entering REFLECT mode.
 func activate() -> void:
 	_active = true
 	monitoring = true
 
 
+## Disable the barrier. Called by HandController when entering ABSORB_SHOOT mode.
 func deactivate() -> void:
 	_active = false
 	monitoring = false
