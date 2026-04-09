@@ -12,8 +12,26 @@ extends RigidBody3D
 ## Seconds before auto-despawn.
 @export var lifetime: float = 5.0
 
+## Damage multiplier (set by FirePattern).
+var damage_multiplier: float = 1.0
+
+## Acceleration in m/s² — positive speeds up, negative slows down.
+var acceleration: float = 0.0
+
+## How strongly this projectile curves toward its homing target.
+var homing_strength: float = 0.0
+
+## Seconds before homing activates.
+var homing_delay: float = 0.0
+
+## The node this projectile homes toward (usually the player camera).
+var homing_target: Node3D = null
+
 var _direction: Vector3 = Vector3.FORWARD
 var _reflected: bool = false
+var _current_speed: float = 0.0
+var _homing_timer: float = 0.0
+var _alive_time: float = 0.0
 
 func _ready() -> void:
 	add_to_group("projectile")
@@ -24,8 +42,10 @@ func _ready() -> void:
 	linear_damp = 0.0
 	body_entered.connect(_on_body_entered)
 
+	_current_speed = speed
+
 	# Apply initial velocity
-	linear_velocity = _direction * speed
+	linear_velocity = _direction * _current_speed
 
 	# Auto-despawn timer
 	var timer := Timer.new()
@@ -39,14 +59,36 @@ func _ready() -> void:
 	_apply_color_tint()
 
 
+func _physics_process(delta: float) -> void:
+	_alive_time += delta
+
+	# Acceleration — speed up or slow down over time
+	if acceleration != 0.0:
+		_current_speed = maxf(0.5, _current_speed + acceleration * delta)
+
+	# Homing — steer toward target after the delay
+	if homing_strength > 0.0 and homing_target and is_instance_valid(homing_target):
+		_homing_timer += delta
+		if _homing_timer >= homing_delay:
+			var to_target := (homing_target.global_position - global_position).normalized()
+			var homing_weight := clampf(homing_strength * delta, 0.0, 1.0)
+			_direction = _direction.lerp(to_target, homing_weight).normalized()
+
+	# Apply updated velocity
+	linear_velocity = _direction * _current_speed
+
+
 ## Called by ReflectBarrier to reverse direction back toward where it came from.
 func reflect(barrier_normal: Vector3) -> void:
 	if _reflected:
 		return
 	_reflected = true
-	# Simply reverse direction so it goes back toward the shooter
+	# Reverse direction so it goes back toward the shooter
 	_direction = -_direction
-	linear_velocity = _direction * speed
+	linear_velocity = _direction * _current_speed
+	# Kill homing so reflected projectiles fly straight back
+	homing_strength = 0.0
+	homing_target = null
 
 
 ## Set direction before adding to scene tree.

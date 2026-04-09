@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dnlq17bvcdpdq" path="res://scenes/core/XRRig.tscn" id="1_du7mj"]
 [ext_resource type="Script" uid="uid://tdaxwj3d3vk5" path="res://scripts/scenes/test_scenes/test_turret.gd" id="2_fnccd"]
 [ext_resource type="PackedScene" path="res://scenes/core/Projectile.tscn" id="3_0ipxd"]
+[ext_resource type="Resource" uid="uid://c5agv1nlp8e86" path="res://resources/fire_patterns/spread.tres" id="4_0ipxd"]
+[ext_resource type="Resource" uid="uid://bj3ynyh4bfttj" path="res://resources/fire_patterns/ring.tres" id="4_jdgrw"]
+[ext_resource type="Resource" path="res://resources/fire_patterns/burst.tres" id="5_fapw1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_du7mj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -44,13 +47,38 @@ mesh = SubResource("BoxMesh_8afph")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" unique_id=1371003511]
 shape = SubResource("BoxShape3D_floor")
 
-[node name="TurretShot" type="Node3D" parent="." unique_id=1075199301]
+[node name="ring_turret" type="Node3D" parent="." unique_id=1822270037]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.148186, 1.5615647, 0)
 script = ExtResource("2_fnccd")
 projectile_scene = ExtResource("3_0ipxd")
+fire_pattern = ExtResource("4_jdgrw")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="TurretShot" unique_id=1542700666]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ring_turret" unique_id=1715418952]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9442587, 0, 0)
 mesh = SubResource("CapsuleMesh_h6wrc")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="TurretShot" unique_id=1908678964]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ring_turret" unique_id=1833343500]
+
+[node name="burst_turret" type="Node3D" parent="." unique_id=251021144]
+transform = Transform3D(0.63443375, 0, 0.77297723, 0, 1, 0, -0.77297723, 0, 0.63443375, 6.148186, 1.5615647, -5.818872)
+script = ExtResource("2_fnccd")
+projectile_scene = ExtResource("3_0ipxd")
+fire_pattern = ExtResource("5_fapw1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="burst_turret" unique_id=1770996718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9442587, 0, 0)
+mesh = SubResource("CapsuleMesh_h6wrc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="burst_turret" unique_id=226125466]
+
+[node name="spread_turret" type="Node3D" parent="." unique_id=1994821645]
+transform = Transform3D(0.0601775, 0, 0.9981877, 0, 1, 0, -0.9981877, 0, 0.0601775, 1.6363006, 1.5615647, -7.2347364)
+script = ExtResource("2_fnccd")
+projectile_scene = ExtResource("3_0ipxd")
+fire_pattern = ExtResource("4_0ipxd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="spread_turret" unique_id=193858863]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9442587, 0, 0)
+mesh = SubResource("CapsuleMesh_h6wrc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="spread_turret" unique_id=901697949]

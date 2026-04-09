@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FirePattern" format=3 uid="uid://bj3ynyh4bfttj"]
+
+[ext_resource type="Script" uid="uid://uq2j66qqo04n" path="res://scripts/scenes/core/fire_pattern.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+shape = 3
+projectile_count = 8
+spread_angle_degrees = 0.0
+speed_multiplier = 0.8
+damage_multiplier = 0.8
+projectile_scale = 0.8
+lifetime_override = 4.0
+windup_time = 0.5

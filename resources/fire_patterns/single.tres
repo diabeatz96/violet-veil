@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="FirePattern" format=3 uid="uid://cysrv3vqa2qtc"]
+
+[ext_resource type="Script" uid="uid://uq2j66qqo04n" path="res://scripts/scenes/core/fire_pattern.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+spread_angle_degrees = 0.0

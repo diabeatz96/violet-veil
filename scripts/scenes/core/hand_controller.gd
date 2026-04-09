@@ -8,6 +8,10 @@ extends XRController3D
 ## Projectile speed when fired from right hand.
 @export var fire_speed: float = 8.0
 
+## Fire pattern resource — controls spread, burst, ring, etc.
+## Leave empty for a basic single shot.
+@export var fire_pattern: FirePattern
+
 ## Which hand: 0 = LEFT, 1 = RIGHT
 @export_enum("LEFT", "RIGHT") var side: int = 0
 
@@ -16,6 +20,9 @@ var _barrier: ReflectBarrier = null
 
 ## Absorb area for left hand in ABSORB_SHOOT mode.
 var _absorb_area: Area3D = null
+
+## Prevents overlapping burst coroutines.
+var _is_firing: bool = false
 
 func _ready() -> void:
 	_barrier = get_node_or_null("ReflectBarrier")
@@ -80,20 +87,52 @@ func _on_absorb_body_entered(body: Node3D) -> void:
 
 
 func _fire_projectile() -> void:
-	if not projectile_scene:
+	if not projectile_scene or _is_firing:
 		return
 	# Fire whatever color is in slot A (absorbed color)
 	var color: int = GameState.color_slot_a
 	if color == GameState.ColorID.NONE:
 		return
 
-	var projectile := projectile_scene.instantiate()
-	projectile.set("color_id", color)
-	projectile.call("set_direction", -global_transform.basis.z)
-	projectile.set("speed", fire_speed)
+	_is_firing = true
+	var forward := -global_transform.basis.z
+	var spawn_pos := global_position + (forward * 0.15)
 
-	get_tree().current_scene.add_child(projectile)
-	projectile.global_position = global_position + (-global_transform.basis.z * 0.15)
+	# If no pattern assigned, default to a single straight shot
+	if not fire_pattern:
+		_spawn_projectile(forward, spawn_pos, color)
+	elif fire_pattern.is_burst():
+		await _fire_burst(forward, spawn_pos, color)
+	else:
+		var directions: Array[Vector3] = fire_pattern.get_directions(forward)
+		for dir in directions:
+			_spawn_projectile(dir, spawn_pos, color)
 
 	# Clear the slot after firing
 	GameState.set_color_slot(GameState.Side.LEFT, GameState.ColorID.NONE)
+	_is_firing = false
+
+
+## Spawns a single projectile with the given direction, position, and color.
+func _spawn_projectile(dir: Vector3, pos: Vector3, color: int) -> void:
+	var projectile := projectile_scene.instantiate()
+	var final_speed := fire_speed
+	if fire_pattern:
+		final_speed *= fire_pattern.speed_multiplier
+		fire_pattern.apply_to_projectile(projectile)
+	projectile.set("color_id", color)
+	projectile.call("set_direction", dir)
+	projectile.set("speed", final_speed)
+	get_tree().current_scene.add_child(projectile)
+	projectile.global_position = pos
+
+
+## Fires projectiles one at a time with a delay between each.
+func _fire_burst(forward: Vector3, pos: Vector3, color: int) -> void:
+	for i in fire_pattern.projectile_count:
+		if not is_inside_tree():
+			return
+		var dirs: Array[Vector3] = fire_pattern.get_directions(forward)
+		_spawn_projectile(dirs[0], pos, color)
+		if i < fire_pattern.projectile_count - 1:
+			await get_tree().create_timer(fire_pattern.burst_delay).timeout
