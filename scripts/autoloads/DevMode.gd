@@ -27,6 +27,18 @@ var _spawn_points: Array[Marker3D] = []
 var _current_spawn_index: int = 0
 
 
+## Returns the current spawn point index (0-based), or -1 if none.
+func get_spawn_index() -> int:
+	if _spawn_points.is_empty():
+		return -1
+	return _current_spawn_index
+
+
+## Returns the total number of spawn points in the current scene.
+func get_spawn_count() -> int:
+	return _spawn_points.size()
+
+
 func _ready() -> void:
 	# Wait a frame for the scene tree to be set up
 	await get_tree().process_frame

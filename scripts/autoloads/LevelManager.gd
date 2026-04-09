@@ -117,10 +117,12 @@ func go_to_location(index: int) -> void:
 # ── Signal handlers ──
 
 func _on_location_cleared(_tier: int, _sublevel: int, location: int) -> void:
+	if _transitioning:
+		return
 	var next_location := location + 1
 	if next_location < _spawn_points.size():
 		# More locations in this sub-level — teleport
-		go_to_location(next_location)
+		await go_to_location(next_location)
 	else:
 		# All locations done — complete the sub-level
 		GameState.complete_sublevel()
@@ -175,7 +177,12 @@ func _load_current_sublevel() -> void:
 		await _transition.fade_out()
 
 	# Change scene
-	get_tree().change_scene_to_file(scene_path)
+	var err := get_tree().change_scene_to_file(scene_path)
+	if err != OK:
+		push_error("LevelManager: failed to load scene '%s' (error %d)" % [scene_path, err])
+		_transitioning = false
+		transition_finished.emit()
+		return
 
 	# Wait one frame for the new scene to be ready
 	await get_tree().process_frame

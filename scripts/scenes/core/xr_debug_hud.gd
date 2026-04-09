@@ -41,7 +41,11 @@ func _process(_delta: float) -> void:
 		lines.append("")
 		lines.append("=== DEV MODE ===")
 		lines.append("God: %s" % ("ON" if dev_mode.god_mode else "OFF"))
-		lines.append("Spawn: %d/%d" % [dev_mode._current_spawn_index + 1, dev_mode._spawn_points.size()])
+		var spawn_count: int = dev_mode.get_spawn_count()
+		if spawn_count > 0:
+			lines.append("Spawn: %d/%d" % [dev_mode.get_spawn_index() + 1, spawn_count])
+		else:
+			lines.append("Spawn: none")
 		lines.append("")
 		lines.append("R-stick: next spawn")
 		lines.append("L-stick: prev spawn")
